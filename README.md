@@ -30,7 +30,7 @@ Constrains specified by Roy are:
 
    ​	**Resource manipulation through representations**
 
-    	**Self-descriptive messages**
+   ​	**Self-descriptive messages**
 
    ​	**Hypermedia as the engine of application state (HATEOAS)**
 
@@ -44,6 +44,5 @@ HATEOAS is mean having access to just entry point of any *Resource Endpoint*, as
 
 REST Architecture lets you rich http responses using hypermedia links to gives the REST client chances to dynamically travers provided services using this links.
 
-
-
+------
  **HATEOAS.Net** solution contains some implementations of HATEOAS in C#  based on different specifications.

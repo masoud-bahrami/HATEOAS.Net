@@ -1,6 +1,6 @@
 **# HATEOAS.Net**
 
- **[Hypermedia](https://en.wikipedia.org/wiki/Hypermedia)** is the core part of REST API. Whiteout them it's just a service which uses HTTP verbs.
+ **[Hypermedia](https://en.wikipedia.org/wiki/Hypermedia)** is the core component of REST API. Whiteout them it's just a service which uses HTTP verbs.
 
  As Roy Fielding(the creator of REST Architecture) states his 2000 PhD dissertation ( "Architectural Styles and the Design of Network-based Software Architectures") an REST Architecture has some design constrains. 
 

@@ -179,15 +179,15 @@ So we can more easily generate the HAL Response:
  ```
  For every http verbs there is a helper method to create a new links:
  ```
- Link.NewGET("/orders");
- Link.NewPOST("/orders");
- Link.NewCONNECT("/orders");
- Link.NewDELETE("/orders");
- Link.NewHEAD("/orders");
- Link.NewOPTIONS("/orders");
- Link.NewPATCH("/orders");
- Link.NewPUT("/orders");
- Link.NewTRACE("/orders");
+ Link.NewGET("/orders"); // Create a new GET link
+ Link.NewPOST("/orders");// Create a new POST link
+ Link.NewCONNECT("/orders");// Create a new CONNECT link
+ Link.NewDELETE("/orders");// Create a new DELETE link
+ Link.NewHEAD("/orders");// Create a new HEAD link
+ Link.NewOPTIONS("/orders");// Create a new OPTIONS link
+ Link.NewPATCH("/orders");// Create a new PATCH link
+ Link.NewPUT("/orders");// Create a new PUT link
+ Link.NewTRACE("/orders");// Create a new TRACE link
  ```
  Adding query parameters to the link. Every query parameters have some fueatures. Its name, position and type. The position is the location of the parameter in the URL, for example the first parameter is name or the secound parameter is age.Type can be one of this:
  ```
@@ -213,7 +213,7 @@ So we can more easily generate the HAL Response:
  ScalarQueryParameter.NewChar(string title, short position);
  ```
  
- Adding the parameter to the link is done this way:
+ Adding the parameter to the link:
  ```
  Link.NewTRACE("/orders/{id}")
                     .WithQueryParameter(ScalarQueryParameter.NewBoolean("isAdmin", 1));

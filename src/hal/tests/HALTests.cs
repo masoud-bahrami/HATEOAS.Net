@@ -299,12 +299,6 @@ namespace HATEOAS.Net.HAL.Tests
         [Fact]
         public void Test2()
         {
-            var propertyInfos = typeof(Person).GetProperties();
-            foreach (var info in propertyInfos)
-            {
-
-            }
-            
             EmbeddedCollection embeddedCollection = new EmbeddedCollection("Ordered")
                 {
                     masoud

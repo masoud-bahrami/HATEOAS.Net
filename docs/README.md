@@ -70,7 +70,7 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
 
  ```c#
                 HAL.Builder()
-                .WithState(new { Name = "Masoud", Familty = "Bahrami", Age = 28 }) // State or Resource
+                .WithState(new { Name = "Masoud", Family = "Bahrami", Age = 28 }) // State or Resource
                 .WithSelfLink("/person/20", HttpVerbs.GET, false) //Hypertext
                 .WithFirstLink("/person/first", HttpVerbs.GET, false)//Hypertext
                 .WithLastLink("/person/last", HttpVerbs.GET, false)//Hypertext
@@ -538,7 +538,7 @@ State can be an object or anonymous object.
 ```c#
 //using anonymous object as the State 
 HAL.Builder()
- .WithState(new { Name = masoud, Familty = "Bahrami", Age = 25 })
+ .WithState(new { Name = masoud, Family = "Bahrami", Age = 25 })
 ```
 
 ```c#
@@ -716,7 +716,8 @@ Adding a hypertext with *Curi* relation:
 **EmbeddedResource** has has a couple of *Builder* methods to create a new one:
 
 ```C#
-           //Create a new EmbeddedResource with one Curi link
+           
+			//Create a new EmbeddedResource with one Curi link
 			Person masoud = new Person("Masoud", "Bahrami", 35);
 
             EmbeddedResource.New(masoud)
@@ -801,13 +802,109 @@ Adding a hypertext with *Curi* relation:
 			
                                                   
 			HAL.Builder()
-               .WithState(new { Name = "Masoud", Familty = "Bahrami", Age = 25 })
+               .WithState(new { Name = "Masoud", Family = "Bahrami", Age = 25 })
                .WithSelfLink("/person/20", HttpVerbs.GET, false)
                .WithEmbedded(orders)
                .WithEmbedded(basket)
                .Build();
 ```
 
+
+
 **Embedded Exceptions**
 
 1. if Resource name is null or white space, *EmbeddedResourceNameNullOrEmptyException* will be raised.
+
+
+
+------
+
+**Don't Repeat Yourself with State Abstract Class**
+
+**State** is implemented from **IState**.  If  http response model inherited from **State** or implemented  **IState** it has both state and hypertexts links.
+
+```c#
+public abstract class State : IState
+    {
+        public State()
+        {
+            LinkObjects = new List<LinkObject>();
+        }
+        [Ignore]
+        public List<LinkObject> LinkObjects { get; private set; }
+
+        protected void AddLink(string relation, Link link);
+        
+        protected void AddFirstLink(string href, string httpVerb, bool? templated = null, string name = "", string type = "", string deprecation = "");
+        
+        protected void AddLastLink(string href, string httpVerb, bool? templated = null, string name = "", string type = "", string deprecation = "");
+        
+        protected void AddPreviousLink(string href, string httpVerb, bool? templated = null, string name = "", string type = "", string deprecation = "");
+        
+        protected void AddNextLink(string href, string httpVerb, bool? templated = null, string name = "", string type = "", string deprecation = "");
+        
+        protected void AddSelfLink(string href, string httpVerb, bool? templated = null, string name = "", string type = "", string deprecation = "");
+        
+        protected void AddEditLink(string href, string httpVerb, bool? templated = null, string name = "", string type = "", string deprecation = "");
+        
+        protected void AddCuriLink(string href, bool? templated = null, string name = "", string type = "", string deprecation = "");
+
+        public abstract object GetState();
+    }
+```
+
+For example if Http Response model is  Person:
+
+```c#
+public class Person : State
+{
+        public Person(string first, string last, int age)
+        {
+            FirstName = first;
+            LastName = last;
+            Age = age;
+            AddLinks();
+        }
+
+        private void AddLinks()
+        {
+        	//Adding links
+            AddSelfLink("/person/20", HttpVerbs.GET,true);
+            AddFirstLink("/person/first", HttpVerbs.GET,true);
+            AddLastLink("/person/last", HttpVerbs.GET, true);
+        }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Age { get; set; }
+
+        public override object GetState()
+        {
+            return this as Person;
+        }
+    }
+```
+
+So in this way we don't have to repeat all Person related links, every time we need to return Person as a Http Response.([Don't Repeat Yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself))
+
+```c#
+				HAL.Builder()
+               	   .WithState(IState)
+```
+
+
+
+Also we can use any object implemented **IState** to create a collection of Embedded resources using **EmbeddedCollection**
+
+```c#
+				var embeddedCollection = new EmbeddedCollection("Ordered")
+                {
+                     new Person("Masoud", "Bahrami", 35)
+                };
+
+                HAL.Builder()
+                   .WithState(new PagedViewModel(pageCount:100,currentPage:2))
+                   .WithEmbededState(embeddedCollection)
+                   .Build();
+```
+

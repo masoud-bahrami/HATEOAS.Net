@@ -3,10 +3,6 @@ using Newtonsoft.Json;
 
 namespace HATEOAS.Net.HAL.Tests
 {
-    public class Personx
-    {
-        public int Id { get; set; } = 10;
-    }
     public class Person : State
     {
         private Person(){
@@ -30,7 +26,6 @@ namespace HATEOAS.Net.HAL.Tests
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
-        public List<Personx> Pers => new List<Personx> { new Personx(), new Personx() };
 
         public override object GetState()
         {

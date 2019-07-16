@@ -38,7 +38,7 @@ namespace HATEOAS.Net.HAL.Tests
         {
             //Arrange
             //Act
-            var sut = new LinkObjectBuilder("/orders/{id}")
+            var sut = new LinkObjectBuilder(LinkRelations.Self)
                 .WithLink(new Link("/order/"))
                 .WithLink(new Link("/order/{id}", HttpVerbs.GET,true))
                 .Build();

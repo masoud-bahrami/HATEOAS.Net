@@ -216,7 +216,7 @@ So we can more easily generate the HAL Response:
  Adding the parameter to the link:
  ```c#
  Link.NewTRACE("/orders/{id}")
-                    .WithQueryParameter(ScalarQueryParameter.NewBoolean("isAdmin", 1));
+     .WithQueryParameter(ScalarQueryParameter.NewBoolean("isAdmin", 1));
  ```
 
 Link exceptions:
@@ -587,17 +587,6 @@ If both Object State and Key/Value states is specified, all of them is merged:
                     { "PostalCode" , "2132520" },
                     { "IsAdmin" , true}
                 })
-                    
-                    
-//then result is 
-                {
-                    "FirstName" : "Masoud",
-                    "LastName" : "Bahrami",
-                    "Age":35
-                    "Phone": "123456789",
-                    "PostalCode" : "2132520",
-                    "IsAdmin" , true,
-                }
 ```
 
 Result is:
@@ -612,5 +601,107 @@ Result is:
    "PostalCode":"2132520",
    "IsAdmin":true
 }
+```
+
+
+
+------
+
+**State Exceptions**
+
+1. If neither State object nor Key/Value State are specified, *HalObjectStateIsNullExeption* will be raised. 
+
+
+
+------
+
+**Adding LinkObject (Hypertext) to the HAL response**
+
+**HAL.Builder** has a couple of methods for adding hypertexts:
+
+```c#
+//Using WithLink methods we cann add a link object.
+var linkObject1 = new LinkObject("orders")
+						{
+    						Links = new List<Link>() { new Link("/Order") }
+						};
+
+HAL.Builder()
+    .WithState("Phone", "123456789")
+    .WithLink(linkObject1)
+    
+    
+    var linkObject2 = new LinkObject("orders")
+						{
+    						Links = new List<Link>() { new Link("/Order") }
+						};
+
+//Using WithLinks methods we cann add a collection of link objects.
+HAL.Builder()
+   .WithState("Phone", "123456789")
+   .WithLinks(linkObject1 ,linkObject2)
+```
+
+Adding a hypertext with *First* relation:
+
+```c#
+            HAL.Builder()
+                .WithState("Name", "Masoud")
+                .WithFirstLink("/user/{name}", HttpVerbs.GET, true)
+                .Build();
+```
+
+Adding a hypertext with *Last* relation:
+
+```c#
+             HAL.Builder()
+                .WithState("Name", "Masoud")
+                .WithLastLink("/user/{name}", HttpVerbs.GET, true)
+                .Build();
+```
+
+Adding a hypertext with *Next* relation:
+
+```c#
+             HAL.Builder()
+                .WithState("Name", "Masoud")
+                .WithNextLink("/user/{name}", HttpVerbs.GET, true)
+                .Build();
+```
+
+Adding a hypertext with *Previous* relation:
+
+```c#
+             HAL.Builder()
+                .WithState("Name", "Masoud")
+                .WithPreviousLink("/user/{name}", HttpVerbs.GET, true)
+                .Build();
+```
+
+Adding a hypertext with *Self* relation:
+
+```c#
+             HAL.Builder()
+                .WithState("Name", "Masoud")
+                .WithSelfLink("/user/{name}", HttpVerbs.GET, true)
+                .Build();
+```
+
+Adding a hypertext with *Edit* relation:
+
+```c#
+             HAL.Builder()
+                .WithState("Name", "Masoud")
+                .WithEditLink("/user/{name}", HttpVerbs.GET, true)
+                .Build();
+```
+
+Adding a hypertext with *Curi* relation:
+
+```c#
+             HAL.Builder()
+                .WithState("Name", "Masoud")
+                .WithCuriLink("/user/{name}", HttpVerbs.GET, true)
+                .Build();
 ```
 

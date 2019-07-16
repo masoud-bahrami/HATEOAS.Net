@@ -4,9 +4,28 @@
 
 ![Conda](https://img.shields.io/conda/pn/conda-forge/python.svg?color=red&style=plastic)
 
+-------
+
+**HATEOAS.Net contains**
+
+|                 |                                                                           |
+| --------------- | ------------------------------------------------------------------------- |
+| HATEOAS.Net.HAL | https://github.com/masoud-bahrami/HATEOAS.Net/tree/master/src/hal         |
+
+-------
+**Roadmap**
+
+|                                     |                     |
+| ----------------------------------- | --------------------|
+| Adding Action Enum Query Parameters | In Progress         |
+| Adding Action Body Parameters       | In Progress         |
+| Adding Action Body Parameters       | In Progress         |
+| HAL Parser                          | In Progress         |
+| RDFs                                | Planned             |
+
 ------
 
-**How to use:**
+**How to use HATEOAS.Net.HAL:**
 
 |                 |                                                              |
 | --------------- | ------------------------------------------------------------ |

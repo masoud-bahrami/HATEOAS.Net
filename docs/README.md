@@ -4,8 +4,6 @@
 
 ![Conda](https://img.shields.io/conda/pn/conda-forge/python.svg?color=red&style=plastic)
 
-Online documents: https://masoud-bahrami.github.io/HATEOAS.Net/
-
 ------
 
 **How to use:**

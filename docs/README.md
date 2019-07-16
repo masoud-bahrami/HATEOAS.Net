@@ -101,12 +101,12 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
  **How to use HATEOAS.Net.HAL**
 
  Every http response contains 3 main parts.
- 1. **State** (State is the resource which exposed by the REST API. For example order.)
- 2. **Hypertexts** (Hypertexts is represented as links.)
- 3. **Embedded State with Hypertexts** (Embedded State is when the response is a collection of states or the response has some related resources wich client is care about it.)
+ 1. **State** (the current state of the resource which exposed by the REST API. For example order.)
+ 2. **Hypertexts** (are represented as links.)
+ 3. **Embedded State with Hypertexts** (When the response is a collection of states or the response has some related resources wich client is care about it.)
 
 
- **HATEOAS.Net.HAL** provided a simple fluent builder to generate a HAP response
+ **HATEOAS.Net.HAL** provided a simple fluent builder to generate a HAL response
 
  ```c#
                 HAL.Builder()
@@ -164,13 +164,13 @@ So we can more easily generate the HAL Response:
 
  Every links have some specifications:
 
- 1. HRef. Its value is either a URI [RFC3986] or a URI Template [RFC6570]
- 2. HTTP Verb. Its value is string, and is used to specify the HttpVerb of the link(action method).
- 3. Is Templated. Its value is boolean and SHOULD be true when the HRef is a URI template (/orders/{id})
- 4. Name. Its value MAY be used as a secondary key for selecting HRef Objects
- 5. Type. Its value is a string used as a hint to indicate the media type expected when dereferencing the target resource.
- 6. Deprecation. Its presence indicates that the link is to be deprecated(i.e. removed)
- 7. Query Parameters. Its value is a collection of "ScalarQueryParameter", and is used to specify the QueryParameters of the link(action method).
+ 1. **HRef**. Its value is either a URI [RFC3986] or a URI Template [RFC6570]
+ 2. **HTTP Verb**. Its value is string, and is used to specify the HttpVerb of the link(action method).
+ 3. **Templated**. Its value is boolean and SHOULD be true when the HRef is a URI template (/orders/{id})
+ 4. **Name**. Its value MAY be used as a secondary key for selecting HRef Objects
+ 5. **Type**. Its value is a string used as a hint to indicate the media type expected when dereferencing the target resource.
+ 6. **Deprecation**. Its presence indicates that the link is to be deprecated(i.e. removed)
+ 7. **Query Parameters**. Its value is a collection of "ScalarQueryParameter", and is used to specify the QueryParameters of the link(action method).
 
  HTTP Verbs should be one of this verbs:
  ```c#

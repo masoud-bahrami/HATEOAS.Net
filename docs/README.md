@@ -705,3 +705,110 @@ Adding a hypertext with *Curi* relation:
                 .Build();
 ```
 
+
+
+------
+
+**Adding Embedded Stats and Links**
+
+**Embedded ** has a Resource Name and a list of **EmbeddedResource**.
+
+**EmbeddedResource** has has a couple of *Builder* methods to create a new one:
+
+```C#
+           //Create a new EmbeddedResource with one Curi link
+			Person masoud = new Person("Masoud", "Bahrami", 35);
+
+            EmbeddedResource.New(masoud)
+                			.WithCuriLink("base", "user/masoud");
+```
+
+
+
+```c#
+       //Create a new EmbeddedResource with one Edit link
+		Person masoud = new Person("Masoud", "Bahrami", 35);
+
+        EmbeddedResource.New(masoud)
+            			.WithEditLink("base", "user/masoud");
+```
+```c#
+   //Create a new EmbeddedResource with one First link
+	Person masoud = new Person("Masoud", "Bahrami", 35);
+
+    EmbeddedResource.New(masoud)
+        			.WithFirstLink("base", "user/masoud");
+```
+```c#
+    //Create a new EmbeddedResource with one First link
+	Person masoud = new Person("Masoud", "Bahrami", 35);
+
+	EmbeddedResource.New(masoud)
+    				.WithFirstLink("base", "user/masoud");
+```
+```c#
+	//Create a new EmbeddedResource with one Last link
+	Person masoud = new Person("Masoud", "Bahrami", 35);
+
+	EmbeddedResource.New(masoud)
+					.WithLastLink("base", "user/masoud");
+```
+```c#
+    //Create a new EmbeddedResource with one Next link
+    Person masoud = new Person("Masoud", "Bahrami", 35);
+
+    EmbeddedResource.New(masoud)
+                    .WithNextLink("base", "user/masoud");
+```
+```c#
+    //Create a new EmbeddedResource with one Previous link
+    Person masoud = new Person("Masoud", "Bahrami", 35);
+
+    EmbeddedResource.New(masoud)
+                    .WithPreviousLink("base", "user/masoud");
+```
+```c#
+    //Create a new EmbeddedResource with one Self link
+    Person masoud = new Person("Masoud", "Bahrami", 35);
+
+    EmbeddedResource.New(masoud)
+                    .WithSelfLink("base", "user/masoud");
+```
+```c#
+    //Create a new EmbeddedResource with one Start link
+    Person masoud = new Person("Masoud", "Bahrami", 35);
+
+    EmbeddedResource.New(masoud)
+                    .WithStartLink("base", "user/masoud");
+```
+```c#
+    //Create a new EmbeddedResource with one custom Link
+    Person masoud = new Person("Masoud", "Bahrami", 35);
+
+    EmbeddedResource.New(masoud)
+                    .WithLinkObject(LinkRelations.First, "user/masoud", HttpVerbs.GET);
+```
+**Adding Embedded resources to the HAL response**
+
+```c#
+			var orders = new Embedded("ed:orders")
+                                    .WithResource(EmbeddedResource.New(masoud)
+                                    .WithSelfLink("/orders/123", HttpVerbs.GET);       
+
+			var basket= new Embedded("ed:basket")
+            		        .WithResource(EmbeddedResource.New(masoud)
+                        	.WithSelfLink("/orders/123", HttpVerbs.GET);
+			
+                                                  
+			HAL.Builder()
+               .WithState(new { Name = "Masoud", Familty = "Bahrami", Age = 25 })
+               .WithSelfLink("/person/20", HttpVerbs.GET, false)
+               .WithEmbedded(orders)
+               .WithEmbedded(basket)
+               .Build();
+```
+
+**Embedded Exceptions**
+
+1. if Resource name is null or white space, *EmbeddedResourceNameNullOrEmptyException* will be raised.
+

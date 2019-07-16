@@ -8,20 +8,17 @@ Online documents: https://masoud-bahrami.github.io/HATEOAS.Net/
 
 ------
 
-**How to use:**
+**HATEOAS.Net contains**
 
-|                 |                                                              |
-| --------------- | ------------------------------------------------------------ |
-| Nugget package  | https://www.nuget.org/packages/HATEOAS.Net.HAL/1.0.0         |
-| Package version | 1.0.0                                                        |
-| .NET Version    | .NET Standard 2.0                                            |
-| Compatibility   | .NET Code version 2.0 and above, .NET standard 4.6.1 and above |
+|                 |                                                                           |
+| --------------- | ------------------------------------------------------------------------- |
+| HATEOAS.Net.HAL | https://github.com/masoud-bahrami/HATEOAS.Net/tree/master/src/hal         |
 
 ------
 
 
 
- **[Hypermedia](https://en.wikipedia.org/wiki/Hypermedia)** is the core component of REST API. Whiteout them it's just a service which uses HTTP verbs.
+ **[Hypermedia](https://en.wikipedia.org/wiki/Hypermedia)** is the core component of REST APIs. Whiteout them it's just a service which uses HTTP verbs.
 
  As Roy Fielding(the creator of REST Architecture) states his 2000 PhD dissertation ( "Architectural Styles and the Design of Network-based Software Architectures") an REST Architecture has some design constrains. 
 
@@ -67,3 +64,14 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
 
 ------
  **HATEOAS.Net** contains some implementations of HATEOAS in C#  based on different specifications.
+
+------
+**Roadmap**
+
+|                                     |                     |
+| ----------------------------------- | --------------------|
+| Adding Action Enum Query Parameters | In Progress         |
+| Adding Action Body Parameters       | In Progress         |
+| Adding Action Body Parameters       | In Progress         |
+| HAL Parser                          | In Progress         |
+| RDFs                                | Planned             |

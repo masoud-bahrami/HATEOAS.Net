@@ -711,7 +711,7 @@ Adding a hypertext with *Curi* relation:
 
 **Adding Embedded Stats and Links**
 
-**Embedded ** has a Resource Name and a list of **EmbeddedResource**.
+**Embedded**  has a Resource Name and a list of **EmbeddedResource**.
 
 **EmbeddedResource** has has a couple of *Builder* methods to create a new one:
 
@@ -811,4 +811,3 @@ Adding a hypertext with *Curi* relation:
 **Embedded Exceptions**
 
 1. if Resource name is null or white space, *EmbeddedResourceNameNullOrEmptyException* will be raised.
-

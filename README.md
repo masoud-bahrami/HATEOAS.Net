@@ -2,8 +2,11 @@
 
 ------
 
-![Conda](https://img.shields.io/conda/pn/conda-forge/python.svg?color=red&style=plastic)
-
+![Conda](https://img.shields.io/conda/pn/conda-forge/python.svg?color=red&style=plastic) 
+![Nuget](https://img.shields.io/nuget/v/HATEOAS.Net.HAL.svg?color=green&style=plastic)
+![Website](https://img.shields.io/website/http/refactor.ir.svg)
+![Twitter URL](https://img.shields.io/twitter/url/http/twitter.com/masodbahrami.svg?style=social)
+------
 Online documents: https://masoud-bahrami.github.io/HATEOAS.Net/
 
 ------

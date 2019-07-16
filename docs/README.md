@@ -229,9 +229,9 @@ Link exceptions:
 
 **LinkObject**
 
-Every hypertext in the HAL response contains a **Link Relations** and a **Link .**  
+Every hypertext in the HAL response that contains a **Link Relations** and a **Link .**  
 
- **LinkRelations**  is a helper method which contains some standard relation types described in [rfc5988](https://tools.ietf.org/html/rfc5988).
+ **LinkRelations**  is a static class that contains some standard relation types described in [rfc5988](https://tools.ietf.org/html/rfc5988).
 
 ```c#
  public static class LinkRelations

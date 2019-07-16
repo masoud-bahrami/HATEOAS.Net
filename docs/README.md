@@ -269,8 +269,8 @@ Link exceptions:
 
 **LinkObject**
 
-Every hypertext in the HAL response that contains a **Link Relations** and a **Link .**  
-
+Every hypertext in the HAL response has a **Relation**(self,first,next and ...) and a collection **Link**. Hypertext is represented as **LinkObject** in the **HATEOAS.Net.HAL**.  
+ 
  **LinkRelations**  is a static class that contains some standard relation types described in [rfc5988](https://tools.ietf.org/html/rfc5988).
 
 ```c#

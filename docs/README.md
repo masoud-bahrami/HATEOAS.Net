@@ -46,29 +46,29 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
 
 ------
  **HATEOAS.Net**
- 
+
  **HATEOAS.Net** contains some implementations of HATEOAS in C#  based on different specifications. Different solutions have been proposed for the use of hypertexts. Hypertext Application Language(HAL) is one of these solutions. 
  HAL is a simple and very popular way to inject hypertexts into http responses based on JSON format. HAL is [drafted](https://tools.ietf.org/html/draft-kelly-json-hal-08) by  [Mike Kelly](mike@stateless.co).
- 
- ------
+
+------
  **HATEOAS.Net.HAL**
- 
+
  **HATEOAS.Net.HAL** is an agile, simple, lightweight and easy to use HAL specification for .NET developers. It also added some optional but very useful features to the HAL specification:
  1. Adding **HTTP verbs** to the link. (The link can be richer by adding HTTP verbs(GET, POST, DELETE and ...))
  2. Adding **Query Parameters** to the link. (The link can be more useful by specifying its parameters)
- 
- ------
+
+------
  **How to use HATEOAS.Net.HAL**
- 
+
  Every http response is contains 3 main parts.
  1. **State** (State is the resource which exposed by the REST API. For example order.)
  2. **Hypertexts** (Hypertexts is represented as links.)
  3. **Embedded State with Hypertexts** (Embedded State is when the response is a collection of states or the response has some related resources wich client is care about it.)
- 
- 
+
+
  **HATEOAS.Net.HAL** provided a simple fluent builder to generate a HAP response
- 
- ```
+
+ ```c#
                 HAL.Builder()
                 .WithState(new { Name = "Masoud", Familty = "Bahrami", Age = 28 }) // State or Resource
                 .WithSelfLink("/person/20", HttpVerbs.GET, false) //Hypertext
@@ -93,9 +93,9 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
 
                 .Build();
  ```
-  
+
   Also for the case of simplicity state object can be inherited from:
-  ```
+  ```c#
   public interface IState
     {
         List<LinkObject> LinkObjects { get; }
@@ -104,7 +104,7 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
     }
   ```
   and embedded states can be inherited from:
-  ```
+  ```c#
   public interface IEmbededState
     {
         string ResourceName { get;}
@@ -113,7 +113,7 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
     }
   ```
 So we can more easily generate the HAL Response:
-```
+```c#
                  HAL.Builder()
                 .WithState(person)
                 .WithEmbededState(embeddedCollection)
@@ -123,7 +123,7 @@ So we can more easily generate the HAL Response:
 **How to use Links**
 
  Every links have some specifications:
- 
+
  1. HRef. Its value is either a URI [RFC3986] or a URI Template [RFC6570]
  2. HTTP Verb. Its value is string, and is used to specify the HttpVerb of the link(action method).
  3. Is Templated. Its value is boolean and SHOULD be true when the HRef is a URI template (/orders/{id})
@@ -131,9 +131,9 @@ So we can more easily generate the HAL Response:
  5. Type. Its value is a string used as a hint to indicate the media type expected when dereferencing the target resource.
  6. Deprecation. Its presence indicates that the link is to be deprecated(i.e. removed)
  7. Query Parameters. Its value is a collection of "ScalarQueryParameter", and is used to specify the QueryParameters of the link(action method).
- 
+
  HTTP Verbs should be one of this verbs:
- ```
+ ```c#
  public class HttpVerbs
     {
         /// <summary>
@@ -178,7 +178,7 @@ So we can more easily generate the HAL Response:
     }
  ```
  For every http verbs there is a helper method to create a new links:
- ```
+ ```c#
  Link.NewGET("/orders"); // Create a new GET link
  Link.NewPOST("/orders");// Create a new POST link
  Link.NewCONNECT("/orders");// Create a new CONNECT link
@@ -190,7 +190,7 @@ So we can more easily generate the HAL Response:
  Link.NewTRACE("/orders");// Create a new TRACE link
  ```
  Adding query parameters to the link. Every query parameters have some fueatures. Its name, position and type. The position is the location of the parameter in the URL, for example the first parameter is name or the secound parameter is age.Type can be one of this:
- ```
+ ```c#
  enum QueryParameterType
     {
         String,
@@ -203,18 +203,414 @@ So we can more easily generate the HAL Response:
         Collection
     }
  ```
- 
+
  To define a new query parameter we should use this class:
- ```
+ ```C#
  ScalarQueryParameter.NewString(string title, short position);
  ScalarQueryParameter.NewBoolean(string title, short position);
  ScalarQueryParameter.NewNumber(string title, short position);
  ScalarQueryParameter.NewDateTime(string title, short position);
  ScalarQueryParameter.NewChar(string title, short position);
  ```
- 
+
  Adding the parameter to the link:
- ```
+ ```c#
  Link.NewTRACE("/orders/{id}")
                     .WithQueryParameter(ScalarQueryParameter.NewBoolean("isAdmin", 1));
+ ```
+
+Link exceptions:
+
+1. *HRef*  is required. When creating a new link, If *HRef* is null or white space  *HRefNullExeption* will be raised. 
+
+   
+
+------
+
+**LinkObject**
+
+Every hypertext in the HAL response contains a **Link Relations** and a **Link .**  
+
+ **LinkRelations**  is a helper method which contains some standard relation types described in [rfc5988](https://tools.ietf.org/html/rfc5988).
+
+```c#
+ public static class LinkRelations
+    {
+        public static readonly string Curries= "curies";
+
+        /// <summary>
+        /// o  Relation Name: alternate
+        /// o Description: Designates a substitute for the link's context.
+        /// o Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Alternate => "alternate";
+        /// <summary>
+        ///  o  Relation Name: appendix
+        /// o Description: Refers to an appendix.
+        /// o  Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Appendix => "appendix";
+        /// <summary>
+        ///  o  Relation Name: bookmark
+        /// o Description: Refers to a bookmark or entry point.
+        /// o Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Bookmark => "bookmark";
+        /// <summary>
+        ///   o  Relation Name: chapter
+        /// o Description: Refers to a chapter in a collection of resources.
+        /// o  Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Chapter => "chapter";
+        /// <summary>
+        ///  o  Relation Name: contents
+        /// o Description: Refers to a table of contents.
+        /// o  Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Contents => "contents";
+        /// <summary>
+        ///  o  Relation Name: copyright
+        /// o Description: Refers to a copyright statement that applies to the
+        /// link's context.
+        /// o Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Copyright => "copyright";
+        /// <summary>
+        ///  o  Relation Name: current
+        /// o Description: Refers to a resource containing the most recent item(s) in a collection of resources.
+        /// o  Reference: [RFC5005]
+        /// </summary>
+        public static string Current => "current";
+        /// <summary>
+        ///   o  Relation Name: describedby
+        /// o Description: Refers to a resource providing information about the link's context.
+        /// o Documentation: <http://www.w3.org/TR/powder-dr/#assoc-linking>
+        /// </summary>
+        public static string Describedby => "describedby";
+        /// <summary>
+        ///  o  Relation Name: edit
+        /// o Description: Refers to a resource that can be used to edit the link's context.
+        /// o Reference: [RFC5023]
+        /// </summary>
+        public static string Edit => "edit";
+        /// <summary>
+        /// o  Relation Name: edit-media
+        /// o Description: Refers to a resource that can be used to edit media associated with the link's context.
+        /// o Reference: [RFC5023]
+        /// </summary>
+        public static string EditMedia => "edit-media";
+        /// <summary>
+        ///    o  Relation Name: enclosure
+        /// o Description: Identifies a related resource that is potentially large and might require special handling.
+        /// o Reference: [RFC4287]
+        /// </summary>
+        public static string Enclosure => "enclosure";
+        /// <summary>
+        ///   o  Relation Name: first
+        /// o Description: An IRI that refers to the furthest preceding resource in a series of resources.
+        /// o  Reference: [RFC5988]
+        /// o  Notes: this relation type registration did not indicate a reference.  Originally requested by Mark Nottingham in December 2004.
+        /// </summary>
+        public static string First => "first";
+        /// <summary>
+        ///    o  Relation Name: glossary
+        /// o Description: Refers to a glossary of terms.
+        /// o  Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Glossary => "glossary";
+        /// <summary>
+        ///    o  Relation Name: help
+        ///   o Description: Refers to a resource offering help(more information, links to other sources information, etc.)
+        ///   o Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Help => "help";
+        /// <summary>
+        ///    o  Relation Name: hub
+        /// o Description: Refers to a hub that enables registration for notification of updates to the context.
+        /// o  Reference: <http://pubsubhubbub.googlecode.com/> <http://pubsubhubbub.googlecode.com/svn/trunk/pubsubhubbub-core-0.3.html>
+        /// o Notes: this relation type was requested by Brett Slatkin.
+        /// </summary>
+        public static string Hub => "hub";
+        /// <summary>
+        ///  o  Relation Name: index
+        /// o Description: Refers to an index.
+        /// o  Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Index => "index";
+        /// <summary>
+        /// o  Relation Name: last
+        /// o Description: An IRI that refers to the furthest following resource in a series of resources.
+        /// o  Reference: [RFC5988]
+        /// o  Notes: this relation type registration did not indicate a reference.  Originally requested by Mark Nottingham in December2004.
+        /// </summary>
+        public static string Last => "last";
+        /// <summary>
+        /// o  Relation Name: latest-version
+        /// o Description: Points to a resource containing the latest(e.g., current) version of the context.
+        /// o  Reference: [RFC5829]
+        /// </summary>
+        public static string LatestVersion => "latest-version";
+        /// <summary>
+        ///  o  Relation Name: license
+        /// o Description: Refers to a license associated with the link's context.
+        /// o Reference: [RFC4946]
+        /// </summary>
+        public static string License => "license";
+        /// <summary>
+        ///  o  Relation Name: next
+        /// o Description: Refers to the next resource in a ordered series of resources.
+        /// o Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Next => "next";
+        /// <summary>
+        ///  o  Relation Name: next-archive
+        /// o Description: Refers to the immediately following archive resource.
+        /// o Reference: [RFC5005]
+        /// </summary>
+        public static string NextArchive => "next-archive";
+        /// <summary>
+        ///  o  Relation Name: payment
+        /// o Description: indicates a resource where payment is accepted.
+        /// o Reference: [RFC5988]
+        /// o Notes: this relation type registration did not indicate a
+        /// reference.Requested by Joshua Kinberg and Robert Sayre.  It is meant as a general way to facilitate acts of payment, and thus
+        /// this specification makes no assumptions on the type of payment or
+        /// transaction protocol.  Examples may include a Web page where
+        /// donations are accepted or where goods and services are available
+        /// for purchase.rel= "payment" is not intended to initiate an
+        /// automated transaction.In Atom documents, a link element with a
+        /// rel = "payment" attribute may exist at the feed/channel level and/or
+        /// the entry/item level.  For example, a rel = "payment" link at the
+        /// feed/channel level may point to a "tip jar" URI, whereas an entry/
+        /// item containing a book review may include a rel= "payment" link
+        /// that points to the location where the book may be purchased
+        /// through an online retailer.
+        /// </summary>
+        public static string Payment => "payment";
+        /// <summary>
+        ///  o  Relation Name: prev
+        /// o Description: Refers to the previous resource in an ordered series
+        /// of resources.Synonym for "previous".
+        /// o Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Prev => "prev";
+        /// <summary>
+        /// o Relation Name: predecessor-version
+        /// o  Description: Points to a resource containing the predecessor
+        /// version in the version history.
+        /// o Reference: [RFC5829]
+        /// </summary>
+        public static string PredecessorVersion => "predecessor-version";
+        /// <summary>
+        ///    o  Relation Name: previous
+        /// o Description: Refers to the previous resource in an ordered series of resources.Synonym for "prev".
+        /// o Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Previous => "previous";
+        /// <summary>
+        ///  o  Relation Name: prev-archive
+        /// o Description: Refers to the immediately preceding archive resource.
+        /// o Reference: [RFC5005]
+        /// </summary>
+        public static string PrevArchive => "prev-archive";
+        /// <summary>
+        ///    o  Relation Name: related
+        /// o Description: Identifies a related resource.
+        /// o  Reference: [RFC4287]
+        /// </summary>
+        public static string Related => "related";
+        /// <summary>
+        ///    o  Relation Name: replies
+        /// o Description: Identifies a resource that is a reply to the context
+        /// of the link.
+        /// o  Reference: [RFC4685]
+        /// </summary>
+        public static string Replies => "replies";
+        /// <summary>
+        ///    o  Relation Name: section
+        /// o Description: Refers to a section in a collection of resources.
+        /// o  Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Section => "section";
+        /// <summary>
+        /// o  Relation Name: self
+        /// o Description: Conveys an identifier for the link's context.
+        /// o Reference: [RFC4287]
+        /// </summary>
+        public static string Self => "self";
+        /// <summary>
+        /// o  Relation Name: service
+        /// o Description: Indicates a URI that can be used to retrieve a service document.
+        /// o  Reference: [RFC5023]
+        /// o  Notes: When used in an Atom document, this relation type specifies
+        /// Atom Publishing Protocol service documents by default.  Requested
+        /// by James Snell.
+        /// </summary>
+        public static string Service => "service";
+        /// <summary>
+        /// o  Relation Name: start
+        /// o Description: Refers to the first resource in a collection of
+        /// resources.
+        /// o  Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Start => "start";
+        /// <summary>
+        ///    o  Relation Name: stylesheet
+        /// o Description: Refers to an external style sheet.
+        /// o  Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Stylesheet => "stylesheet";
+        /// <summary>
+        ///    o  Relation Name: subsection
+        /// o Description: Refers to a resource serving as a subsection in a
+        /// collection of resources.
+        /// o  Reference: [W3C.REC-html401-19991224]
+        /// </summary>
+        public static string Subsection => "subsection";
+        /// <summary>
+        ///   o  Relation Name: successor-version
+        /// o Description: Points to a resource containing the successor version
+        /// in the version history.
+        /// o Reference: [RFC5829]
+        /// </summary>
+        public static string SuccessorVersion => "successor-version";
+        /// <summary>
+        ///  o  Relation Name: up
+        /// o Description: Refers to a parent document in a hierarchy of
+        /// documents.
+        /// o  Reference: [RFC5988]
+        /// o  Notes: this relation type registration did not indicate a
+        /// reference.  Requested by Noah Slater.
+        /// </summary>
+        public static string Up => "up";
+        /// <summary>
+        ///  o  Relation Name: version-history
+        /// o Description: points to a resource containing the version history
+        /// for the context.
+        /// o  Reference: [RFC5829]
+        /// </summary>
+        public static string VersionHistory => "version-history";
+        /// <summary>
+        /// o  Relation Name: via
+        /// o Description: Identifies a resource that is the source of the
+        /// information in the link's context.
+        /// o Reference: [RFC4287]
+        /// </summary>
+        public static string Via => "via";
+        /// <summary>
+        ///   o  Relation Name: working-copy
+        /// o Description: Points to a working copy for this resource.
+        /// o Reference: [RFC5829]
+        /// </summary>
+        public static string WorkingCopy => "working-copy";
+        /// <summary>
+        ///   o  Relation Name: working-copy-of
+        /// o Description: Points to the versioned resource from which this
+        /// working copy was obtained.
+        /// o Reference: [RFC5829]
+        /// </summary>
+        public static string WorkingCopyOf => "working-copy-of";
+    }
 ```
+
+
+
+**LinkObject**  contains a list of link plus a relation type for hypertext. We can create a new **LinkObject**  using its constructor or use **LinkObjectBuilder**.
+
+```C#
+//Create a new 'Self' link 
+new LinkObjectBuilder(LinkRelations.Self)
+                .WithLink(new Link("/order/{id}", HttpVerbs.GET,true))
+                .Build();
+```
+
+Link Object exceptions:
+
+1. The relation is required, if it null or white space  *LinkRelationNullExeption* will be raised.
+2. If link collection is null or empty *LinkObjectLinksCollectionEmptyExeption* will be raised.
+
+------
+
+**State**
+
+State can be an object or anonymous object.
+
+```c#
+//using anonymous object as the State 
+HAL.Builder()
+ .WithState(new { Name = masoud, Familty = "Bahrami", Age = 25 })
+```
+
+```c#
+  			//Using typed object as the State
+            var masoud = new Person("Masoud", "Bahrami", 35);
+            
+			HAL.Builder()
+                .WithState(masoud)
+```
+
+
+
+Also **State** can be represented as a collection of Key/Value:
+
+```c#
+				//the State is specified as a Key/Value property
+				//Key is the name of the property
+				//value is the value of the property
+				HAL.Builder()
+                .WithState("Name", "Masoud")
+```
+
+```c#
+ 				//the state can be a  Dictionary of key/value.
+				//Key is the name of the property
+				//value is the value of the property
+				HAL.Builder()
+                .WithState(new Dictionary<string, object>
+                {
+                    { "Name" , "Masoud" },
+                    { "Family" , "Bahrami"}
+                })
+```
+
+If both Object State and Key/Value states is specified, all of them is merged:
+
+```c#
+				//Using typed object as the State
+            	var masoud = new Person("Masoud", "Bahrami", 35);
+            
+				HAL.Builder()
+				.WithState(masoud)
+                .WithState("Phone", "123456789")
+                .WithState(new Dictionary<string, object>
+                {
+                    { "PostalCode" , "2132520" },
+                    { "IsAdmin" , true}
+                })
+                    
+                    
+//then result is 
+                {
+                    "FirstName" : "Masoud",
+                    "LastName" : "Bahrami",
+                    "Age":35
+                    "Phone": "123456789",
+                    "PostalCode" : "2132520",
+                    "IsAdmin" , true,
+                }
+```
+
+Result is:
+
+```json
+
+{  
+   "FirstName":"Masoud",
+   "LastName":"Bahrami",
+   "Age":35,
+   "Phone":"123456789",
+   "PostalCode":"2132520",
+   "IsAdmin":true
+}
+```
+

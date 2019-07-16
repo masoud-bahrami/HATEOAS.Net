@@ -1,4 +1,25 @@
-**[HATEOAS.Net](https://masoud-bahrami.github.io/HATEOAS.Net/)**
+**HATEOAS.Net**
+
+------
+
+![Conda](https://img.shields.io/conda/pn/conda-forge/python.svg?color=red&style=plastic)
+
+Online documents: https://masoud-bahrami.github.io/HATEOAS.Net/
+
+------
+
+**How to use:**
+
+|                 |                                                              |
+| --------------- | ------------------------------------------------------------ |
+| Nugget package  | https://www.nuget.org/packages/HATEOAS.Net.HAL/1.0.0         |
+| Package version | 1.0.0                                                        |
+| .NET Version    | .NET Standard 2.0                                            |
+| Compatibility   | .NET Code version 2.0 and above, .NET standard 4.6.1 and above |
+
+------
+
+
 
  **[Hypermedia](https://en.wikipedia.org/wiki/Hypermedia)** is the core component of REST API. Whiteout them it's just a service which uses HTTP verbs.
 

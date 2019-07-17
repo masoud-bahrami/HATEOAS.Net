@@ -943,7 +943,7 @@ Also we can use any object that implemented **IState** to create a collection of
 
 ------
 
-**Resulted HAL JSON is lock like:**
+**Resulted HAL JSON:**
 
 ```json
 {  

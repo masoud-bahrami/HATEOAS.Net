@@ -217,7 +217,7 @@ So we can easily generate the HAL Response:
 
     }
  ```
- For every http verbs there is a helper method to create a new links:
+ For every http verbs there is a helper method to create a new link of that type:
  ```c#
  Link.NewGET("/orders"); // Create a new GET link
  Link.NewPOST("/orders");// Create a new POST link
@@ -229,11 +229,15 @@ So we can easily generate the HAL Response:
  Link.NewPUT("/orders");// Create a new PUT link
  Link.NewTRACE("/orders");// Create a new TRACE link
  ```
-Adding query parameters to the link. Every query parameters have some features. Its name, position and type.
+------
 
-The position is the order of the parameter in the URL, for example the first parameter is name or the second parameter is age. 
+**Adding query parameters to the link.**
 
-Type can be one of this:
+ Every query parameters have some features. Its name, position and type.
+
+The **Position** is the order of the parameter in the URL, for example the first parameter is name or the second parameter is age. 
+
+**Type** can be one of this:
 
  ```c#
  enum QueryParameterType
@@ -260,7 +264,7 @@ Type can be one of this:
 
  Adding the parameter to the link:
  ```c#
- Link.NewTRACE("/orders/{id}")
+ Link.NewSelf("/orders/{id}")
      .WithQueryParameter(ScalarQueryParameter.NewBoolean("isAdmin", 1));
  ```
 
@@ -274,7 +278,7 @@ Link exceptions:
 
 **LinkObject**
 
-Every hypertext in the HAL response has a **Relation**(*self,first,next and ...*) and a collection **Link**. 
+Every hypertext in the HAL response has a **Relation**(*self,first,next and ...*) and a collection of **Link**. 
 
 Hypertext is represented as **LinkObject** in the **HATEOAS.Net.HAL**.  
 
@@ -560,7 +564,7 @@ Hypertext is represented as **LinkObject** in the **HATEOAS.Net.HAL**.
     }
 ```
 
-**LinkObject**  contains a list of link plus a relation type for hypertext. We can create a new **LinkObject**  using its constructor or use **LinkObjectBuilder**.
+**LinkObject**  contains a list of links plus a relation type. We can create a new **LinkObject**  using its constructor or use **LinkObjectBuilder**.
 
 ```C#
 //Create a new 'Self' link 
@@ -583,7 +587,7 @@ State can be a typed object or an anonymous object.
 ```c#
             //using anonymous object as the State 
             HAL.Builder()
-             .WithState(new { Name = masoud, Family = "Bahrami", Age = 25 })
+               .WithState(new { Name = masoud, Family = "Bahrami", Age = 25 })
 ```
 
 ```c#
@@ -591,12 +595,12 @@ State can be a typed object or an anonymous object.
             var masoud = new Person("Masoud", "Bahrami", 35);
             
 			HAL.Builder()
-                .WithState(masoud)
+               .WithState(masoud)
 ```
 
 
 
-**State** Also  can be represented as a collection of Key/Value:
+**State** Also  can be represented as a collection of Key/Value pairs:
 
 ```c#
 				//the State is specified as a Key/Value property
@@ -634,10 +638,9 @@ If both Object State and Key/Value states are specified, all of them is merged:
                     })
 ```
 
-Result is:
+Resulted in:
 
 ```json
-
 {  
    "FirstName":"Masoud",
    "LastName":"Bahrami",
@@ -758,7 +761,7 @@ Adding a hypertext with *Curi* relation:
 
 **Embedded**  has a Resource Name and a list of **EmbeddedResource**.
 
-**EmbeddedResource** has has a couple of *Builder* methods to create a new one:
+**EmbeddedResource** has a couple of *Builder* methods to create a new one:
 
 ```C#
            //Create a new EmbeddedResource with a Curi link
@@ -769,7 +772,7 @@ Adding a hypertext with *Curi* relation:
 ```
 
 ```c#
-       //Create a new EmbeddedResource with a Edit link
+       //Create a new EmbeddedResource with an Edit link
 		Person masoud = new Person("Masoud", "Bahrami", 35);
 
         EmbeddedResource.New(masoud)
@@ -781,13 +784,6 @@ Adding a hypertext with *Curi* relation:
 
     EmbeddedResource.New(masoud)
         			.WithFirstLink("base", "user/masoud");
-```
-```c#
-    //Create a new EmbeddedResource with a First link
-	Person masoud = new Person("Masoud", "Bahrami", 35);
-
-	EmbeddedResource.New(masoud)
-    				.WithFirstLink("base", "user/masoud");
 ```
 ```c#
 	//Create a new EmbeddedResource with a Last link
@@ -837,9 +833,9 @@ Adding a hypertext with *Curi* relation:
 var orders = new Embedded("ed:orders")
     				.WithResource(EmbeddedResource.New(masoud)                           			 					  .WithSelfLink("/orders/123",HttpVerbs.GET));       
 
-			var basket= new Embedded("ed:basket")
-            		        .WithResource(EmbeddedResource.New(masoud)
-                        				 .WithSelfLink("/orders/123", HttpVerbs.GET));
+var basket= new Embedded("ed:basket")
+            		 .WithResource(EmbeddedResource.New(masoud)
+                     			 .WithSelfLink("/orders/123", HttpVerbs.GET));
 			                               
 			HAL.Builder()
                .WithState(new { Name = "Masoud", Family = "Bahrami", Age = 25 })

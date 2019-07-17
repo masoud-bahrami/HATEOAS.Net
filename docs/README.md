@@ -94,8 +94,8 @@ REST Architecture lets you enrich http responses using hypermedia links to gives
  **HATEOAS.Net.HAL**
 
  **HATEOAS.Net.HAL** is an agile, simple, lightweight and easy to use *HAL* specification for .NET developers. It also added some optional but very useful features to the origin *HAL* specification:
- 1. Adding **HTTP verbs** to links. (The link can be richer by adding HTTP verbs(GET, POST, DELETE and ...))
- 2. Adding **Query Parameters** to links. (The link can be more useful by specifying its parameters)
+ 1. Adding **HTTP verbs** to links. (Link can be richer by adding HTTP verbs(GET, POST, DELETE and ...))
+ 2. Adding **Query Parameters** to links. (Link can be more useful by specifying its parameters)
 
 ------
  **How to use HATEOAS.Net.HAL**

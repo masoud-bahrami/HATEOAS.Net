@@ -594,7 +594,7 @@ State can be a typed object or an anonymous object.
   			//Using typed object as the State
             var masoud = new Person("Masoud", "Bahrami", 35);
             
-			HAL.Builder()
+            HAL.Builder()
                .WithState(masoud)
 ```
 
@@ -628,7 +628,7 @@ If both Object State and Key/Value states are specified, all of them is merged:
 				//Using typed object as the State
             	var masoud = new Person("Masoud", "Bahrami", 35);
             
-				HAL.Builder()
+                 HAL.Builder()
                     .WithState(masoud)
                     .WithState("Phone", "123456789")
                     .WithState(new Dictionary<string, object>
@@ -765,32 +765,32 @@ Adding a hypertext with *Curi* relation:
 
 ```C#
            //Create a new EmbeddedResource with a Curi link
-			Person masoud = new Person("Masoud", "Bahrami", 35);
+         Person masoud = new Person("Masoud", "Bahrami", 35);
 
-            EmbeddedResource.New(masoud)
+         EmbeddedResource.New(masoud)
                 			.WithCuriLink("base", "user/masoud");
 ```
 
 ```c#
        //Create a new EmbeddedResource with an Edit link
-		Person masoud = new Person("Masoud", "Bahrami", 35);
+        Person masoud = new Person("Masoud", "Bahrami", 35);
 
         EmbeddedResource.New(masoud)
             			.WithEditLink("base", "user/masoud");
 ```
 ```c#
    //Create a new EmbeddedResource with a First link
-	Person masoud = new Person("Masoud", "Bahrami", 35);
+    Person masoud = new Person("Masoud", "Bahrami", 35);
 
     EmbeddedResource.New(masoud)
         			.WithFirstLink("base", "user/masoud");
 ```
 ```c#
 	//Create a new EmbeddedResource with a Last link
-	Person masoud = new Person("Masoud", "Bahrami", 35);
+    Person masoud = new Person("Masoud", "Bahrami", 35);
 
-	EmbeddedResource.New(masoud)
-					.WithLastLink("base", "user/masoud");
+    EmbeddedResource.New(masoud)
+                    .WithLastLink("base", "user/masoud");
 ```
 ```c#
     //Create a new EmbeddedResource with a Next link

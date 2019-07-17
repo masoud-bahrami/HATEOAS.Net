@@ -42,7 +42,7 @@
 
  **[Hypermedia](https://en.wikipedia.org/wiki/Hypermedia)** is the core component of REST API. Whiteout them it's just a service which uses HTTP verbs.
 
- As Roy Fielding(the creator of REST Architecture) states his 2000 PhD dissertation ( "Architectural Styles and the Design of Network-based Software Architectures") an REST Architecture has some design constrains. 
+ As Roy Fielding(the creator of REST Architecture) states his in 2000 PhD dissertation ( "Architectural Styles and the Design of Network-based Software Architectures") a REST Architecture has some design constrains. 
 
 Roy defined it as:
 
@@ -72,7 +72,7 @@ Constrains specified by Roy are:
 
    ​	**Self-descriptive messages**
 
-   ​	**Hypermedia as the engine of application state (HATEOAS)**
+   ​	**Hypermedia As The Engine Of Application State (HATEOAS)**
 
    
 
@@ -80,22 +80,22 @@ Constrains specified by Roy are:
 
 **HATEOAS** 
 
-HATEOAS is mean having access to just entry point of any *Resource Endpoint*, as a human or system, you should be able to discover all services provided by the server, and how to communicate with server. A REST client needs little to no prior knowledge about how to interact with an application or server beyond a generic understanding of hypermedia.
+HATEOAS is mean having access to just entry point of any *Resource API*, as a human or system, you should be able to discover all services provided by the server, and how to communicate with server. A REST client needs little or no prior knowledge about how to interact with an application or server beyond a generic understanding of hypermedia.
 
-REST Architecture lets you rich http responses using hypermedia links to gives the REST client chances to dynamically travers provided services using this links.
+REST Architecture lets you enrich http responses using hypermedia links to gives the REST client chances to  dynamically explore provided services.
 
 ------
  **HATEOAS.Net**
 
- **HATEOAS.Net** contains some implementations of HATEOAS in C#  based on different specifications. Different solutions have been proposed for the use of hypertexts. Hypertext Application Language(HAL) is one of these solutions. 
- HAL is a simple and very popular way to inject hypertexts into http responses based on JSON format. HAL is [drafted](https://tools.ietf.org/html/draft-kelly-json-hal-08) by  [Mike Kelly](mike@stateless.co).
+ **HATEOAS.Net** contains some implementations of HATEOAS in C#  based on different specifications. Different solutions have been proposed for the use of hypertexts. **Hypertext Application Language(HAL)** is one of these solutions. 
+ HAL is a simple and very popular way to inject hypertexts into http responses based on JSON format. *HAL* is [drafted](https://tools.ietf.org/html/draft-kelly-json-hal-08) by  [Mike Kelly](mike@stateless.co).
 
 ------
  **HATEOAS.Net.HAL**
 
- **HATEOAS.Net.HAL** is an agile, simple, lightweight and easy to use HAL specification for .NET developers. It also added some optional but very useful features to the HAL specification:
- 1. Adding **HTTP verbs** to the link. (The link can be richer by adding HTTP verbs(GET, POST, DELETE and ...))
- 2. Adding **Query Parameters** to the link. (The link can be more useful by specifying its parameters)
+ **HATEOAS.Net.HAL** is an agile, simple, lightweight and easy to use *HAL* specification for .NET developers. It also added some optional but very useful features to the origin *HAL* specification:
+ 1. Adding **HTTP verbs** to links. (The link can be richer by adding HTTP verbs(GET, POST, DELETE and ...))
+ 2. Adding **Query Parameters** to links. (The link can be more useful by specifying its parameters)
 
 ------
  **How to use HATEOAS.Net.HAL**
@@ -103,7 +103,7 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
  Every http response contains 3 main parts.
  1. **State** (the current state of the resource which exposed by the REST API. For example order.)
  2. **Hypertexts** (are represented as links.)
- 3. **Embedded State with Hypertexts** (When the response is a collection of states or the response has some related resources wich client is care about it.)
+ 3. **Embedded State with Hypertexts** (When the response is a collection of states or the response has some related resources which clients are care about it.)
 
 
  **HATEOAS.Net.HAL** provided a simple fluent builder to generate a HAL response
@@ -134,7 +134,7 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
                 .Build();
  ```
 
-  Also for the case of simplicity state object can be inherited from:
+  Also for the case of simplicity **State** object can be inherited from:
   ```c#
   public interface IState
     {
@@ -143,7 +143,7 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
         object GetState();
     }
   ```
-  and embedded states can be inherited from:
+  and **Embedded States** can be inherited from:
   ```c#
   public interface IEmbededState
     {
@@ -152,7 +152,7 @@ REST Architecture lets you rich http responses using hypermedia links to gives t
         ICollection<IState> States { get; }
     }
   ```
-So we can more easily generate the HAL Response:
+So we can easily generate the HAL Response:
 ```c#
                  HAL.Builder()
                 .WithState(person)
@@ -229,7 +229,12 @@ So we can more easily generate the HAL Response:
  Link.NewPUT("/orders");// Create a new PUT link
  Link.NewTRACE("/orders");// Create a new TRACE link
  ```
- Adding query parameters to the link. Every query parameters have some fueatures. Its name, position and type. The position is the location of the parameter in the URL, for example the first parameter is name or the secound parameter is age.Type can be one of this:
+Adding query parameters to the link. Every query parameters have some features. Its name, position and type.
+
+The position is the order of the parameter in the URL, for example the first parameter is name or the second parameter is age. 
+
+Type can be one of this:
+
  ```c#
  enum QueryParameterType
     {
@@ -261,7 +266,7 @@ So we can more easily generate the HAL Response:
 
 Link exceptions:
 
-1. *HRef*  is required. When creating a new link, If *HRef* is null or white space  *HRefNullExeption* will be raised. 
+1. *HRef*  is required. When creating a new link, If *HRef* is null or white space  *HRefNullExeption* will be throw. 
 
    
 
@@ -269,9 +274,11 @@ Link exceptions:
 
 **LinkObject**
 
-Every hypertext in the HAL response has a **Relation**(self,first,next and ...) and a collection **Link**. Hypertext is represented as **LinkObject** in the **HATEOAS.Net.HAL**.  
- 
- **LinkRelations**  is a static class that contains some standard relation types described in [rfc5988](https://tools.ietf.org/html/rfc5988).
+Every hypertext in the HAL response has a **Relation**(*self,first,next and ...*) and a collection **Link**. 
+
+Hypertext is represented as **LinkObject** in the **HATEOAS.Net.HAL**.  
+
+ **LinkRelations** is a static class that contains some standard relation types described in [rfc5988](https://tools.ietf.org/html/rfc5988).
 
 ```c#
  public static class LinkRelations
@@ -553,8 +560,6 @@ Every hypertext in the HAL response has a **Relation**(self,first,next and ...) 
     }
 ```
 
-
-
 **LinkObject**  contains a list of link plus a relation type for hypertext. We can create a new **LinkObject**  using its constructor or use **LinkObjectBuilder**.
 
 ```C#
@@ -566,19 +571,19 @@ new LinkObjectBuilder(LinkRelations.Self)
 
 Link Object exceptions:
 
-1. The relation is required, if it null or white space  *LinkRelationNullExeption* will be raised.
-2. If link collection is null or empty *LinkObjectLinksCollectionEmptyExeption* will be raised.
+1. The relation is required, if it null or white space  *LinkRelationNullExeption* will be throw.
+2. If link collection is null or empty *LinkObjectLinksCollectionEmptyExeption* will be throw.
 
 ------
 
 **State**
 
-State can be an object or anonymous object.
+State can be a typed object or an anonymous object.
 
 ```c#
-//using anonymous object as the State 
-HAL.Builder()
- .WithState(new { Name = masoud, Family = "Bahrami", Age = 25 })
+            //using anonymous object as the State 
+            HAL.Builder()
+             .WithState(new { Name = masoud, Family = "Bahrami", Age = 25 })
 ```
 
 ```c#
@@ -591,14 +596,14 @@ HAL.Builder()
 
 
 
-Also **State** can be represented as a collection of Key/Value:
+**State** Also  can be represented as a collection of Key/Value:
 
 ```c#
 				//the State is specified as a Key/Value property
 				//Key is the name of the property
 				//value is the value of the property
 				HAL.Builder()
-                .WithState("Name", "Masoud")
+                   .WithState("Name", "Masoud")
 ```
 
 ```c#
@@ -606,27 +611,27 @@ Also **State** can be represented as a collection of Key/Value:
 				//Key is the name of the property
 				//value is the value of the property
 				HAL.Builder()
-                .WithState(new Dictionary<string, object>
-                {
-                    { "Name" , "Masoud" },
-                    { "Family" , "Bahrami"}
-                })
+                   .WithState(new Dictionary<string, object>
+                    {
+                        { "Name" , "Masoud" },
+                        { "Family" , "Bahrami"}
+                    })
 ```
 
-If both Object State and Key/Value states is specified, all of them is merged:
+If both Object State and Key/Value states are specified, all of them is merged:
 
 ```c#
 				//Using typed object as the State
             	var masoud = new Person("Masoud", "Bahrami", 35);
             
 				HAL.Builder()
-				.WithState(masoud)
-                .WithState("Phone", "123456789")
-                .WithState(new Dictionary<string, object>
-                {
-                    { "PostalCode" , "2132520" },
-                    { "IsAdmin" , true}
-                })
+                    .WithState(masoud)
+                    .WithState("Phone", "123456789")
+                    .WithState(new Dictionary<string, object>
+                    {
+                        { "PostalCode" , "2132520" },
+                        { "IsAdmin" , true}
+                    })
 ```
 
 Result is:
@@ -649,7 +654,7 @@ Result is:
 
 **State Exceptions**
 
-1. If neither State object nor Key/Value State are specified, *HalObjectStateIsNullExeption* will be raised. 
+1. If neither State object nor Key/Value State are specified, *HalObjectStateIsNullExeption* will be throw. 
 
 
 
@@ -671,7 +676,7 @@ HAL.Builder()
     .WithLink(linkObject1)
     
     
-    var linkObject2 = new LinkObject("orders")
+var linkObject2 = new LinkObject("orders")
 						{
     						Links = new List<Link>() { new Link("/Order") }
 						};
@@ -686,9 +691,9 @@ Adding a hypertext with *First* relation:
 
 ```c#
             HAL.Builder()
-                .WithState("Name", "Masoud")
-                .WithFirstLink("/user/{name}", HttpVerbs.GET, true)
-                .Build();
+               .WithState("Name", "Masoud")
+               .WithFirstLink("/user/{name}", HttpVerbs.GET, true)
+               .Build();
 ```
 
 Adding a hypertext with *Last* relation:
@@ -756,74 +761,71 @@ Adding a hypertext with *Curi* relation:
 **EmbeddedResource** has has a couple of *Builder* methods to create a new one:
 
 ```C#
-           
-			//Create a new EmbeddedResource with one Curi link
+           //Create a new EmbeddedResource with a Curi link
 			Person masoud = new Person("Masoud", "Bahrami", 35);
 
             EmbeddedResource.New(masoud)
                 			.WithCuriLink("base", "user/masoud");
 ```
 
-
-
 ```c#
-       //Create a new EmbeddedResource with one Edit link
+       //Create a new EmbeddedResource with a Edit link
 		Person masoud = new Person("Masoud", "Bahrami", 35);
 
         EmbeddedResource.New(masoud)
             			.WithEditLink("base", "user/masoud");
 ```
 ```c#
-   //Create a new EmbeddedResource with one First link
+   //Create a new EmbeddedResource with a First link
 	Person masoud = new Person("Masoud", "Bahrami", 35);
 
     EmbeddedResource.New(masoud)
         			.WithFirstLink("base", "user/masoud");
 ```
 ```c#
-    //Create a new EmbeddedResource with one First link
+    //Create a new EmbeddedResource with a First link
 	Person masoud = new Person("Masoud", "Bahrami", 35);
 
 	EmbeddedResource.New(masoud)
     				.WithFirstLink("base", "user/masoud");
 ```
 ```c#
-	//Create a new EmbeddedResource with one Last link
+	//Create a new EmbeddedResource with a Last link
 	Person masoud = new Person("Masoud", "Bahrami", 35);
 
 	EmbeddedResource.New(masoud)
 					.WithLastLink("base", "user/masoud");
 ```
 ```c#
-    //Create a new EmbeddedResource with one Next link
+    //Create a new EmbeddedResource with a Next link
     Person masoud = new Person("Masoud", "Bahrami", 35);
 
     EmbeddedResource.New(masoud)
                     .WithNextLink("base", "user/masoud");
 ```
 ```c#
-    //Create a new EmbeddedResource with one Previous link
+    //Create a new EmbeddedResource with a Previous link
     Person masoud = new Person("Masoud", "Bahrami", 35);
 
     EmbeddedResource.New(masoud)
                     .WithPreviousLink("base", "user/masoud");
 ```
 ```c#
-    //Create a new EmbeddedResource with one Self link
+    //Create a new EmbeddedResource with a Self link
     Person masoud = new Person("Masoud", "Bahrami", 35);
 
     EmbeddedResource.New(masoud)
                     .WithSelfLink("base", "user/masoud");
 ```
 ```c#
-    //Create a new EmbeddedResource with one Start link
+    //Create a new EmbeddedResource with a Start link
     Person masoud = new Person("Masoud", "Bahrami", 35);
 
     EmbeddedResource.New(masoud)
                     .WithStartLink("base", "user/masoud");
 ```
 ```c#
-    //Create a new EmbeddedResource with one custom Link
+    //Create a new EmbeddedResource with a custom Link
     Person masoud = new Person("Masoud", "Bahrami", 35);
 
     EmbeddedResource.New(masoud)
@@ -832,15 +834,13 @@ Adding a hypertext with *Curi* relation:
 **Adding Embedded resources to the HAL response**
 
 ```c#
-			var orders = new Embedded("ed:orders")
-                                    .WithResource(EmbeddedResource.New(masoud)
-                                    .WithSelfLink("/orders/123", HttpVerbs.GET);       
+var orders = new Embedded("ed:orders")
+    				.WithResource(EmbeddedResource.New(masoud)                           			 					  .WithSelfLink("/orders/123",HttpVerbs.GET));       
 
 			var basket= new Embedded("ed:basket")
             		        .WithResource(EmbeddedResource.New(masoud)
-                        	.WithSelfLink("/orders/123", HttpVerbs.GET);
-			
-                                                  
+                        				 .WithSelfLink("/orders/123", HttpVerbs.GET));
+			                               
 			HAL.Builder()
                .WithState(new { Name = "Masoud", Family = "Bahrami", Age = 25 })
                .WithSelfLink("/person/20", HttpVerbs.GET, false)
@@ -849,19 +849,15 @@ Adding a hypertext with *Curi* relation:
                .Build();
 ```
 
-
-
 **Embedded Exceptions**
 
-1. if Resource name is null or white space, *EmbeddedResourceNameNullOrEmptyException* will be raised.
-
-
+1. if Resource name is null or white space, *EmbeddedResourceNameNullOrEmptyException* will be throw.
 
 ------
 
 **Don't Repeat Yourself with State Abstract Class**
 
-**State** is implemented from **IState**.  If  http response model inherited from **State** or implemented  **IState** it has both state and hypertexts links.
+If  http response model inherited from **State** or implemented  **IState** it has both state and hypertexts links.
 
 ```c#
 public abstract class State : IState
@@ -870,7 +866,6 @@ public abstract class State : IState
         {
             LinkObjects = new List<LinkObject>();
         }
-        [Ignore]
         public List<LinkObject> LinkObjects { get; private set; }
 
         protected void AddLink(string relation, Link link);
@@ -893,7 +888,7 @@ public abstract class State : IState
     }
 ```
 
-For example if Http Response model is  Person:
+For example:
 
 ```c#
 public class Person : State
@@ -932,9 +927,7 @@ So in this way we don't have to repeat all Person related links, every time we n
                	   .WithState(IState)
 ```
 
-
-
-Also we can use any object implemented **IState** to create a collection of Embedded resources using **EmbeddedCollection**
+Also we can use any object that implemented **IState** to create a collection of Embedded resources using **EmbeddedCollection**
 
 ```c#
 				var embeddedCollection = new EmbeddedCollection("Ordered")
@@ -946,5 +939,147 @@ Also we can use any object implemented **IState** to create a collection of Embe
                    .WithState(new PagedViewModel(pageCount:100,currentPage:2))
                    .WithEmbededState(embeddedCollection)
                    .Build();
+```
+
+------
+
+**Resulted HAL JSON is lock like:**
+
+```json
+{  
+   "Name":"Masoud",
+   "Familty":"Bahrami",
+   "Age":25,
+   "_links":{  
+      "self":{  
+         "href":"/person/20",
+         "httpVerb":"GET",
+         "templated":false,
+         "queryParamaters":[]
+      },
+      "first":{  
+         "href":"/person/first",
+         "httpVerb":"GET",
+         "templated":false,
+         "queryParamaters":[]
+      },
+      "last":{  
+         "href":"/person/last",
+         "httpVerb":"GET",
+         "templated":false,
+         "queryParamaters":[]
+      },
+      "test":{  
+         "href":"asd",
+         "httpVerb":"",
+         "queryParamaters":[  
+            {  
+               "Title":"has",
+               "Position":2,
+               "Type":"Boolean"
+            },
+            {  
+               "Title":"age",
+               "Position":1,
+               "Type":"Number"
+            }
+         ]
+      }
+   },
+   "_embedded":{  
+      "ed:orders":[  
+         {  
+            "_links":{  
+               "self":{  
+                  "href":"/person/20",
+                  "httpVerb":"GET",
+                  "templated":false,
+                  "queryParamaters":[  
+
+                  ]
+               },
+               "first":{  
+                  "href":"/person/first",
+                  "httpVerb":"GET",
+                  "templated":false,
+                  "queryParamaters":[  
+
+                  ]
+               },
+               "last":{  
+                  "href":"/person/last",
+                  "httpVerb":"GET",
+                  "templated":false,
+                  "queryParamaters":[  
+
+                  ]
+               },
+               "test":{  
+                  "href":"asd",
+                  "httpVerb":"",
+                  "queryParamaters":[  
+                     {  
+                        "Title":"isAdmin",
+                        "Position":2,
+                        "Type":"Boolean"
+                     },
+                     {  
+                        "Title":"age",
+                        "Position":1,
+                        "Type":"Number"
+                     }
+                  ]
+               }
+            },
+            "FirstName":"Masoud",
+            "LastName":"Bahrami",
+            "Age":35
+         }
+      ],
+      "ed:saba":[  
+         {  
+            "_links":{  
+               "self":{  
+                  "href":"/person/20",
+                  "httpVerb":"GET",
+                  "templated":false,
+                  "queryParamaters":[]
+               },
+               "first":{  
+                  "href":"/person/first",
+                  "httpVerb":"GET",
+                  "templated":false,
+                  "queryParamaters":[]
+               },
+               "last":{  
+                  "href":"/person/last",
+                  "httpVerb":"GET",
+                  "templated":false,
+                  "queryParamaters":[]
+               },
+               "test":{  
+                  "href":"asd",
+                  "httpVerb":"",
+                  "queryParamaters":[  
+                     {  
+                        "Title":"isAdmin",
+                        "Position":2,
+                        "Type":"Boolean"
+                     },
+                     {  
+                        "Title":"age",
+                        "Position":1,
+                        "Type":"Number"
+                     }
+                  ]
+               }
+            },
+            "FirstName":"Masoud",
+            "LastName":"Bahrami",
+            "Age":35
+         }
+      ]
+   }
+}
 ```
 

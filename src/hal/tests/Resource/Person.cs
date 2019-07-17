@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-
+﻿
 namespace HATEOAS.Net.HAL.Tests
 {
     public class Person : State

@@ -103,7 +103,7 @@ REST Architecture lets you enrich http responses using hypermedia links to gives
  Every http response contains 3 main parts.
  1. **State** (the current state of the resource which exposed by the REST API. For example order.)
  2. **Hypertexts** (are represented as links.)
- 3. **Embedded State with Hypertexts** (When the response is a collection of states or the response has some related resources which clients are care about it.)
+ 3. **Embedded State with Hypertexts** (When the response is a collection of states or the response has some related resources which clients are care about them.)
 
 
  **HATEOAS.Net.HAL** provided a simple fluent builder to generate a HAL response

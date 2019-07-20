@@ -158,7 +158,7 @@ namespace HATEOAS.Net.HAL
                     {
                         JObject link = new JObject
                         {
-                            [LINK_TITLE] = Links(this.linkObjects)
+                            [LINK_TITLE] = Links(resource.LinksObjects)
                         };
 
                         foreach (var keyValue in resource.Object.BreakesToItsProperties())

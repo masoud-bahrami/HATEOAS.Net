@@ -5,6 +5,7 @@
     <Authors>Masoud Bahrami</Authors>
     <Company>http://Refactor.ir</Company>
     <PackageId>HATEOAS.Net.HAL</PackageId>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

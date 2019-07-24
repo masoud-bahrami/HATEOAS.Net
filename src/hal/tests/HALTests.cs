@@ -15,6 +15,7 @@ namespace HATEOAS.Net.HAL.Tests
         private const string HREF = "href";
 
         private readonly Person masoud = new Person("Masoud", "Bahrami", 35);
+
         [Fact]
         public void Should_Raise_Error_If_ObjectState_IsNull()
         {
@@ -22,7 +23,7 @@ namespace HATEOAS.Net.HAL.Tests
             Assert.Throws<HalObjectStateIsNullExeption>(() => HAL.Builder().Build());
             Assert.Throws<HalObjectStateIsNullExeption>(() => HAL.Builder().WithLink(new LinkObject("orders")
             {
-                Links = new List<Link>() { new Link("/Order") }
+                Links = new List<Link>() {new Link("/Order")}
             }).Build());
         }
 
@@ -34,13 +35,14 @@ namespace HATEOAS.Net.HAL.Tests
 
             //Arrange && Act
             var sut = HAL.Builder()
-                .WithState(new { EventId = 1, OccuredAt = currentDateTime })
+                .WithState(new {EventId = 1, OccuredAt = currentDateTime})
                 .Build();
 
             //Assert
             Assert.True(JObject.Parse(sut)["OccuredAt"].Value<DateTime>() == currentDateTime);
             Assert.True(JObject.Parse(sut)["EventId"].Value<int>() == 1);
         }
+
         [Fact]
         public void Should_Be_Ok_If_StateObject_Is_Anonymous()
         {
@@ -50,7 +52,7 @@ namespace HATEOAS.Net.HAL.Tests
 
             //Arrange && Act
             var sut = HAL.Builder()
-                .WithState(new { Name = masoud, Familty = "Bahrami", Age = 25 })
+                .WithState(new {Name = masoud, Familty = "Bahrami", Age = 25})
                 .Build();
 
             //Assert
@@ -58,6 +60,7 @@ namespace HATEOAS.Net.HAL.Tests
             Assert.True(JObject.Parse(sut)["Familty"].Value<string>() == bahrami);
             Assert.True(JObject.Parse(sut)["Age"].Value<int>() == 25);
         }
+
         [Fact]
         public void Should_Be_Ok_If_StateObject_Is_A_Collection_Of_Key_Value()
         {
@@ -73,6 +76,7 @@ namespace HATEOAS.Net.HAL.Tests
             Assert.True(JObject.Parse(sut)["Family"].Value<string>() == "Bahrami");
             Assert.True(JObject.Parse(sut)["Age"].Value<int>() == 1);
         }
+
         [Fact]
         public void Should_Be_Ok_If_StateObject_Is_A_Dictionery_Of_Key_Value()
         {
@@ -80,8 +84,8 @@ namespace HATEOAS.Net.HAL.Tests
             var sut = HAL.Builder()
                 .WithState(new Dictionary<string, object>
                 {
-                    { "Name" , "Masoud" },
-                    { "Family" , "Bahrami"}
+                    {"Name", "Masoud"},
+                    {"Family", "Bahrami"}
                 })
                 .Build();
 
@@ -89,6 +93,7 @@ namespace HATEOAS.Net.HAL.Tests
             Assert.True(JObject.Parse(sut)["Name"].Value<string>() == "Masoud");
             Assert.True(JObject.Parse(sut)["Family"].Value<string>() == "Bahrami");
         }
+
         [Fact]
         public void Should_Be_Ok_If_StateObject_Be_IState()
         {
@@ -104,6 +109,7 @@ namespace HATEOAS.Net.HAL.Tests
             Assert.True(JObject.Parse(sut)[nameof(Person.Age)].Value<int>() == masoud.Age);
             Assert.True(JObject.Parse(sut)[LINK_TITLE].Count() == masoud.LinkObjects.Count);
         }
+
         [Fact]
         public void Both_KeyValue_State_And_ObjectState_Should_Be_In_Result()
         {
@@ -114,11 +120,11 @@ namespace HATEOAS.Net.HAL.Tests
             var sut = HAL.Builder()
                 .WithState(new Dictionary<string, object>
                 {
-                    { "Name" , "Masoud" },
-                    { "Family" , "Bahrami"}
+                    {"Name", "Masoud"},
+                    {"Family", "Bahrami"}
                 })
                 .WithState("Age", 35)
-                .WithState(new { EventId = 1, OccuredAt = currentDateTime })
+                .WithState(new {EventId = 1, OccuredAt = currentDateTime})
                 .Build();
 
             //Assert
@@ -128,6 +134,7 @@ namespace HATEOAS.Net.HAL.Tests
             Assert.True(JObject.Parse(sut)["EventId"].Value<int>() == 1);
             Assert.True(JObject.Parse(sut)["Age"].Value<int>() == 35);
         }
+
         [Fact]
         public void Should_Successfully_Insrted_First_Link_Using_WithFirstLink_Method()
         {
@@ -148,6 +155,7 @@ namespace HATEOAS.Net.HAL.Tests
             //Assert
             Assert.True((link as Link).HRef == "/user/{name}");
         }
+
         [Fact]
         public void Should_Successfully_Insrted_Last_Link_Using_WithFirstLink_Method()
         {
@@ -168,6 +176,7 @@ namespace HATEOAS.Net.HAL.Tests
             //Assert
             Assert.True((link as Link).HRef == "/user/{name}");
         }
+
         [Fact]
         public void Should_Successfully_Insrted_Next_Link_Using_WithFirstLink_Method()
         {
@@ -188,6 +197,7 @@ namespace HATEOAS.Net.HAL.Tests
             //Assert
             Assert.True((link as Link).HRef == "/user/{name}");
         }
+
         [Fact]
         public void Should_Successfully_Insrted_Previous_Link_Using_WithFirstLink_Method()
         {
@@ -208,6 +218,7 @@ namespace HATEOAS.Net.HAL.Tests
             //Assert
             Assert.True((link as Link).HRef == "/user/{name}");
         }
+
         [Fact]
         public void Should_Successfully_Insrted_Self_Link_Using_WithFirstLink_Method()
         {
@@ -228,6 +239,7 @@ namespace HATEOAS.Net.HAL.Tests
             //Assert
             Assert.True((link as Link).HRef == "/user/{name}");
         }
+
         [Fact]
         public void Should_Successfully_Insrted_Edit_Link_Using_WithFirstLink_Method()
         {
@@ -248,6 +260,7 @@ namespace HATEOAS.Net.HAL.Tests
             //Assert
             Assert.True((link as Link).HRef == "/user/{name}");
         }
+
         [Fact]
         public void Should_Successfully_Insrted_Curi_Link_Using_WithFirstLink_Method()
         {
@@ -269,7 +282,25 @@ namespace HATEOAS.Net.HAL.Tests
             Assert.True((link as Link).HRef == "/user/{rel}");
             Assert.True((link as Link).Templated);
         }
+
         [Fact]
+        public void Property_State_Will_Be_Replaced_If_Already_Set()
+        {
+            //Arrange
+            var propertyName = "Name";
+            var sut = HAL.Builder()
+                .WithState(propertyName, "Masoud");
+
+            //Arrange && Act
+            sut.WithState(propertyName, "Ali");
+            var result = sut.Build();
+
+            //Assert
+            Assert.True(JObject.Parse(result)[propertyName].Value<string>() == "Ali");
+            Assert.False(JObject.Parse(result)[propertyName].Value<string>() == "Masoud");
+        }
+
+    [Fact]
         public void Test1()
         {
             var result = HAL.Builder()

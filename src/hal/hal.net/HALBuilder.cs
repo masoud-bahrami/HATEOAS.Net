@@ -14,7 +14,6 @@
 using HATEOAS.Net.HAL.Exceptions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -89,12 +88,23 @@ namespace HATEOAS.Net.HAL
 
         public HAL WithState(Dictionary<string, object> states)
         {
-            ownState = states;
+            foreach (var state in states)
+            {
+                WithState(state.Key, state.Value);
+            }
             return this;
         }
         public HAL WithState(string propName, object propValue)
         {
-            ownState.Add(propName, propValue);
+            if (ownState.ContainsKey(propName))
+            {
+                ownState[propName] = propValue;
+            }
+            else
+            {
+                ownState.Add(propName, propValue);
+            }
+
             return this;
         }
 

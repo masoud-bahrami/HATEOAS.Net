@@ -5,7 +5,8 @@
     <Authors>Masoud Bahrami</Authors>
     <Company>http://Refactor.ir</Company>
     <PackageId>HATEOAS.Net.HAL</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
+    <Description>State property will be replaced if already declared.</Description>
   </PropertyGroup>
 
   <ItemGroup>

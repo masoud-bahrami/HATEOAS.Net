@@ -64,7 +64,7 @@ Constrains specified by Roy are:
 
 6. Uniform interface
 
-   Uniform interface have some constrains :
+   Uniform interface has some constrains :
 
    ​	**Resource identification in requests**
 

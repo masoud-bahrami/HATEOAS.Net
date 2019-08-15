@@ -5,8 +5,12 @@
     <Authors>Masoud Bahrami</Authors>
     <Company>http://Refactor.ir</Company>
     <PackageId>HATEOAS.Net.HAL</PackageId>
-    <Version>1.1.0</Version>
-    <Description>State property will be replaced if already declared.</Description>
+    <Version>1.1.1</Version>
+    <Description>HATEOAS.Net.HAL is an agile, simple, lightweight and easy to use HAL specification for .NET developers. It also added some optional but very useful features to the origin HAL specification:
+
+Adding HTTP verbs to links. (Link can be richer by adding HTTP verbs(GET, POST, DELETE and …))
+Adding Query Parameters to links. (Link can be more useful by specifying its parameters)</Description>
+    <PackageReleaseNotes>Downgrade Newtonsoft package to version 8</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

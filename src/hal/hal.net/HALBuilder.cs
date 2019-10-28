@@ -132,7 +132,7 @@ namespace HATEOAS.Net.HAL
             {
                 foreach (var keyValue in ownState)
                 {
-                    jsonObject[keyValue.Key] = keyValue.Value.ToJToken();
+                    jsonObject[keyValue.Key] = keyValue.Value?.ToJToken();
                 }
             }
         }
@@ -143,7 +143,7 @@ namespace HATEOAS.Net.HAL
             {
                 foreach (var keyValue in ownObjctState.BreakesToItsProperties())
                 {
-                    jsonObject[keyValue.Key] = keyValue.Value.ToJToken();
+                    jsonObject[keyValue.Key] = keyValue.Value?.ToJToken();
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace HATEOAS.Net.HAL
 
                         foreach (var keyValue in resource.Object.BreakesToItsProperties())
                         {
-                            link[keyValue.Key] = keyValue.Value.ToJToken();
+                            link[keyValue.Key] = keyValue.Value?.ToJToken();
                         }
                         jobjects.Add(link);
                     }
@@ -216,7 +216,7 @@ namespace HATEOAS.Net.HAL
             JObject linkValue = new JObject();
             foreach (var valueTuple in link.GetProperties())
             {
-                linkValue[valueTuple.Item1] = valueTuple.Item2.ToJToken();
+                linkValue[valueTuple.Item1] = valueTuple.Item2?.ToJToken();
             }
 
             var list = new List<JObject>();
@@ -225,12 +225,12 @@ namespace HATEOAS.Net.HAL
                 JObject param = new JObject();
                 foreach (var o in valueTuple)
                 {
-                    param[o.Key] = o.Value.ToJToken();
+                    param[o.Key] = o.Value?.ToJToken();
                 }
                 list.Add(param);
             }
 
-            linkValue[link.QueryParametersTitle] = list.ToJToken();
+            linkValue[link.QueryParametersTitle] = list?.ToJToken();
             return linkValue;
         }
     }

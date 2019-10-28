@@ -5,7 +5,7 @@
     <Authors>Masoud Bahrami</Authors>
     <Company>http://Refactor.ir</Company>
     <PackageId>HATEOAS.Net.HAL</PackageId>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <Description>HATEOAS.Net.HAL is an agile, simple, lightweight and easy to use HAL specification for .NET developers. It also added some optional but very useful features to the origin HAL specification:
 
 Adding HTTP verbs to links. (Link can be richer by adding HTTP verbs(GET, POST, DELETE and …))

@@ -32,7 +32,7 @@
 |                 |                                                              |
 | --------------- | ------------------------------------------------------------ |
 | Nugget package  | https://www.nuget.org/packages/HATEOAS.Net.HAL/1.0.0         |
-| Package version | 1.0.0                                                        |
+| Package version | 1.1.2                                                        |
 | .NET Version    | .NET Standard 2.0                                            |
 | Compatibility   | .NET Code version 2.0 and above, .NET standard 4.6.1 and above |
 

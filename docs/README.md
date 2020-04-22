@@ -270,7 +270,7 @@ The **Position** is the order of the parameter in the URL, for example the first
 
 Link exceptions:
 
-1. *HRef*  is required. When creating a new link, If *HRef* is null or white space  *HRefNullExeption* will be throw. 
+1. *HRef*  is required. When creating a new link, If *HRef* is null or white space  *HRefNullExeption* will be thrown. 
 
    
 

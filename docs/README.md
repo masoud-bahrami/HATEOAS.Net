@@ -42,7 +42,7 @@
 
  **[Hypermedia](https://en.wikipedia.org/wiki/Hypermedia)** is the core component of REST API. Whiteout them it's just a service which uses HTTP verbs.
 
- As Roy Fielding(the creator of REST Architecture) states his in 2000 PhD dissertation ( "Architectural Styles and the Design of Network-based Software Architectures") a REST Architecture has some design constrains. 
+ As Roy Fielding(the creator of REST Architecture) states in his  2000 PhD dissertation ( "Architectural Styles and the Design of Network-based Software Architectures") a REST Architecture has some design constrains. 
 
 Roy defined it as:
 

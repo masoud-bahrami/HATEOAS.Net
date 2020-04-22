@@ -162,7 +162,7 @@ So we can easily generate the HAL Response:
 -------
 **How to use Links**
 
- Every links have some specifications:
+ A link has some specifications:
 
  1. **HRef**. Its value is either a URI [RFC3986] or a URI Template [RFC6570]
  2. **HTTP Verb**. Its value is string, and is used to specify the HttpVerb of the link(action method).

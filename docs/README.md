@@ -80,7 +80,7 @@ Constrains specified by Roy are:
 
 **HATEOAS** 
 
-HATEOAS is mean having access to just entry point of any *Resource API*, as a human or system, you should be able to discover all services provided by the server, and how to communicate with server. A REST client needs little or no prior knowledge about how to interact with an application or server beyond a generic understanding of hypermedia.
+HATEOAS means having access to just entry point of any *Resource API*, as a human or system, you should be able to discover all services provided by the server, and how to communicate with server. A REST client needs little or no prior knowledge about how to interact with an application or server beyond a generic understanding of hypermedia.
 
 REST Architecture lets you enrich http responses using hypermedia links to gives the REST client chances to  dynamically explore provided services.
 
